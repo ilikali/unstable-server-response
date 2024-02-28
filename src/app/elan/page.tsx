@@ -1,6 +1,4 @@
 import Image from "next/image";
-import styles from "./page.module.css";
-import Link from "next/link";
 
 async function getData() {
   const responseVip = await fetch(
@@ -27,6 +25,7 @@ async function getData() {
     elansPremium: await responsePremium.json(),
   };
 }
+
 async function getVip() {
   const response = await fetch(
     `https://api.bakoo.az/v2/ru/elan?category=cars&page=1&per_page=4&vip=1&sort=random`,
@@ -37,33 +36,7 @@ async function getVip() {
   return response.json();
 }
 
-async function getNew() {
-  const response = await fetch(
-    `https://api.bakoo.az/v2/ru/elan?category=cars&page=1&per_page=10`,
-    {
-      cache: "no-store",
-    }
-  );
-  return response.json();
-}
-
-async function getPremium() {
-  const response = await fetch(
-    `https://api.bakoo.az/v2/ru/elan?category=cars&per_page=5&premium=1&page=1`,
-    {
-      cache: "no-store",
-    }
-  );
-  return response.json();
-}
-
 export default async function Home() {
-  const data = await Promise.all([getVip(), getNew(), getPremium()]);
-  return (
-    <main className={styles.main}>
-      <Link href="/elan">Elan</Link>
-
-      {JSON.stringify(data)}
-    </main>
-  );
+  const data = await Promise.all([getVip()]);
+  return <main>{JSON.stringify(data)}</main>;
 }
