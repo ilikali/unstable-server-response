@@ -59,11 +59,5 @@ async function getPremium() {
 
 export default async function Home() {
   const data = await Promise.all([getVip(), getNew(), getPremium()]);
-  return (
-    <main className={styles.main}>
-      <Link href="/elan">Elan</Link>
-
-      {JSON.stringify(data)}
-    </main>
-  );
+  return <main className={styles.main}>{JSON.stringify(data)}</main>;
 }
